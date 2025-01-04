@@ -92,36 +92,36 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
       <div className='bg-[#FAFAFA] max-w-screen-2xl mx-auto'>
 
         <div className='max-w-[1440px] mx-auto'>
-          <div className='max-w-screen-lg mx-auto flex items-center gap-2 pt-[24px] pb-[24px]'>
+          <div className='max-w-screen-xl px-5 mx-auto flex items-center gap-2 pt-[24px] pb-[24px]'>
             <span className='text-[#252B42] font-[700] text-[14px]'>Home</span>
             <MdOutlineKeyboardArrowRight fill='#BDBDBD' size={30} />
-            <span className='text-[#BDBDBD]'>shop</span>
+            <span className='text-[#b1aeae] font-bold'>shop</span>
           </div>
         </div>
 
-        <div className='max-w-[1440px] mx-auto h-[600px] bg-[#FAFAFA]'>
+        <div className='max-w-[1440px] lg:mx-8 mx-2 shadow-xl border rounded-md border-gray-400 h-auto bg-[#FAFAFA] lg:p-10 p-4'>
 
-          <div className='max-w-screen-lg mx-auto h-[600px] flex gap-10'>
+          <div className='flex flex-col sm:flex-row max-w-screen-xl mx-auto h-auto sm:gap-10 gap-4 sm:px-10 px-2 relative'>
 
             {/* img */}
-            <div className='w-[550px]  rounded-[10px] h-[600px]'>
+            <div className='sm:w-[506px] w-full relative rounded-[10px] mb-4'>
 
-              <div className='bg-[#FFFFFF] max-w-[300px]  rounded-[10px]  max-h-[506px] my-auto mx-auto '>
+              <div className='bg-[#FFFFFF] w-full h-[250px]  rounded-[10px] sm:h-[450px]  relative'>
                 <Image
                   src={data.image ? urlFor(data.image).url() : "/placeholder-image.png"}
                   height={500}
                   width={300}
                   alt={data.name || "Product image"}
-                  className='overflow-hidden rounded-[5px] bg-cover object-cover'
+                  className='overflow-hidden rounded-[5px] h-full w-full  absolute inset-0 object-cover '
                   onError={(e) => e.currentTarget.src = "/placeholder-image.png"} // Graceful fallback
                 />
 
               </div>
 
               {/* stock image  */}
-              <div className='max-w-[220px] ml-8 mt-5 max-h-[100px]  flex items-center gap-5 '>
+              <div className='flex gap-4 mt-4 py-5 '>
 
-                <div className='w-[110px] h-[100px] '>
+                <div className='max-w-[110px]  h-auto rounded-md overflow-hidden border border-gray-200 cursor-pointer'>
                   <Image
                     src={data.image ? urlFor(data.image).url() : "/placeholder-image.png"}
                     height={75}
@@ -133,7 +133,7 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
 
                 </div>
 
-                <div className='w-[110px] h-[75px]  '>
+                <div className='max-w-[110px] h-auto rounded-md overflow-hidden border border-gray-200 cursor-pointer'>
                   <Image
                     src={data.image ? urlFor(data.image).url() : "/placeholder-image.png"}
                     height={75}
@@ -151,11 +151,11 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
             </div>
 
             {/* text  */}
-            <div className='max-w-[510px] h-[550px]'>
+            <div className=' py-5 text-center sm:text-left'>
               <h3 className='text-[#252B42] font-[400] text-[20px]'>{data.name}</h3>
 
               {/* review */}
-              <div className='w-[223px] h-[24px] flex items-center gap-5 my-[23px] ml-[10px] '>
+              <div className='w-[223px] h-[24px] flex items-center sm:gap-5 gap-2 my-[23px] ml-[10px] '>
                 <div className='w-[150px] h-[23px] '>
                   <Image
                     src={"/stars.png"}
@@ -166,15 +166,15 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
                   </Image>
                 </div>
 
-                <div className='w-[100px]'>
-                  <p className='text-[#737373] font-[14px] text-[14px]'>10 Reviews</p>
+                <div className='w-[100px] mb-3'>
+                  <p className='text-[#737373]  font-bold text-[14px]'>10 Reviews</p>
                 </div>
 
               </div>
 
               {/* price */}
               <div >
-                <p className='text-[24px] font-[700] text-[#252B42]'>{data.price}$</p>
+                <p className='text-[24px] font-[700] text-[#252B42]'> <span className='line-through text-[#737373]'>50$</span> {data.price}$</p>
               </div>
 
               {/* stock */}
@@ -183,31 +183,31 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
               </div>
               {/* title */}
               <div className='max-w-[464px] my-5'>
-                <p className='text-[#858585] font-[400]  text-[14px] '>{data.description}</p>
+                <p className='text-[#858585] font-[400]  text-[18px] '>{data.description}</p>
               </div>
 
               {/* line  */}
-              <hr className='border-b-[1px]' />
+              <hr className='border-b-[1px] w-full' />
 
               {/* rounded color light */}
-              <div className='flex  items-center my-10 gap-2 mt-4'>
+              <div className='sm:flex  hidden  items-center my-10 gap-2 mt-4'>
                 <div className='w-[16px] h-[16px] bg-[#23A6F0] rounded-full'></div>
                 <div className='w-[16px] h-[16px] bg-[#23856D] rounded-full'></div>
                 <div className='w-[16px] h-[16px] bg-[#E77C40] rounded-full'></div>
                 <div className='w-[16px] h-[16px] bg-[#252B42] rounded-full'></div>
               </div>
 
-              <div className='max-w-[400px] h-[44px] flex gap-5 items-center'>
+              <div className='max-w-[400px] my-8 h-[44px] flex gap-5 items-center'>
 
-                <button className='bg-[#23A6F0] w-[148px] h-[44px] rounded-[5px] py-[10px] px-[20px] text-[#FFFFFF] text-[14px] font-[700]'>Select option</button>
+                <button className='bg-[#23A6F0] w-[148px] h-[44px] rounded-[5px] sm:py-[10px] sm:px-[20px]  text-[#FFFFFF] text-[14px] font-[700]'>Select option</button>
 
                 {/* Icons */}
                 <div className='flex gap-5 items-center'>
-                  <div className='bg-[#FFFFFF] rounded-[45px] flex items-center justify-center w-[50px] h-[50px] border-[1px]'>
+                  <div className='bg-[#FFFFFF] rounded-[45px] flex items-center justify-center  h-[50px] border-[1px]'>
                     <CiHeart size={30} />
                   </div>
 
-                  <div className='bg-[#FFFFFF] rounded-[45px] flex items-center justify-center w-[50px] h-[50px] border-[1px]'>
+                  <div className='bg-[#FFFFFF] rounded-[45px] flex items-center justify-center  h-[50px] border-[1px]'>
                     <button
 
                       onClick={handleAddToCart}
@@ -216,7 +216,7 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
                     </button>
                   </div>
 
-                  <div className='bg-[#FFFFFF] rounded-[45px] flex items-center justify-center w-[50px] h-[50px] border-[1px]'>
+                  <div className='bg-[#FFFFFF] rounded-[45px] flex items-center justify-center sm:w-[50px] w-full h-[50px] border-[1px]'>
                     <MdRemoveRedEye size={30} />
                   </div>
 
