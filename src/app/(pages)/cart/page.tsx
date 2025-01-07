@@ -1,6 +1,7 @@
 "use client";
 import Header from "@/app/components/header";
 import { useCart } from "../context/cartcontext";
+import CheckoutButton from "@/app/components/stripe/stripe";
 
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
@@ -127,6 +128,7 @@ const CartPage = () => {
           </div>
         )}
       </div>
+     
     </section>
   );
 };
