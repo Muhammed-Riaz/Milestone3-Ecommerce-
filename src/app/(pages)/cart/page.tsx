@@ -2,6 +2,7 @@
 import Header from "@/app/components/header";
 import { useCart } from "../context/cartcontext";
 import Link from "next/link";
+
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
 
