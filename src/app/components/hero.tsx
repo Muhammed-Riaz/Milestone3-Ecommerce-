@@ -31,10 +31,9 @@ function Hero() {
 
         <div className="grid lg:grid-cols-3 sm:grid-cols-1 gap-10 max-w-screen-lg mx-auto font-semibold px-5">
           {/* Card 1 */}
-          <div className="relative flex justify-center">
-            <div className="sm:w-[250px] w-[250px]">
-            <Image src="/img1.png" width={510} height={500} alt="Men" />
-            <p className="absolute lg:bottom-14 bottom-5 left-5 bg-white text-center py-2 px-4">MEN</p>
+          <div className="relative flex lg:block justify-center">
+            <Image src="/img1.png" width={240} height={500} alt="Men" />
+            <p className="absolute lg:bottom-40 bottom-5 left-10 bg-white text-center py-2 px-4">MEN</p>
           </div>
           {/* Card 2 */}
           <div className="relative flex flex-col justify-center items-center">
@@ -54,7 +53,6 @@ function Hero() {
           </div>
 
         </div>
-      </div>
       </div>
     </main>
   );
