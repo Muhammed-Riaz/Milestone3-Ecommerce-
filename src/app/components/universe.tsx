@@ -23,14 +23,14 @@ function Universe() {
             </p>
 
             {/* Buttons */}
-            <div className='lg:flex flex-col sm:flex-row justify-center lg:justify-start gap-5 mt-5 '>
+            <div className='lg:flex flex-col sm:flex-row justify-center lg:justify-start gap-5 mt-5 sm:space-x-4 block '>
 
               <button className='py-[15px] px-[40px] rounded-xl text-white bg-[#23A6F0] w-[200px] lg:bg-[#2DC071] '>
                 Buy Now
               </button>
               
 
-              <button className='py-[15px] px-[40px]  mt-3 sm:mt-0 rounded-lg border-2 w-[200px] border-blue-400 text-[#23A6F0] lg:hidden block ml-16'>
+              <button className='py-[15px] px-[40px]  mt-3 sm:mt-0 rounded-lg border-2 w-[200px] border-blue-400 text-[#23A6F0] lg:hidden lg:ml-16 '>
                 Learn More
               </button>
 

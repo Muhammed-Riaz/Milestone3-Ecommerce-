@@ -1,7 +1,9 @@
 "use client"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { urlFor } from '@/sanity/lib/image';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { CiHeart } from "react-icons/ci";
 import { FaSpinner } from 'react-icons/fa';
 import { IoCartOutline } from "react-icons/io5";
@@ -17,27 +19,29 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
 
   const [data, setData] = useState<ShoppingCartProduct | null>(null);
   const [loading, setLoading] = useState(true);
-  const wrappedParam = React.use(params);
-  const [productAdded, setProductAdded] = useState(false); // State to track if the product is added
   const { addToCart } = useCart();
 
-  useEffect(() => {
-    if (wrappedParam.id) {
-      fetchData();
-    }
-  }, [wrappedParam.id]);
+  const {id} = React.use(params);
+
+useEffect(() => {
+  if (id) {
+    fetchData();
+  }
+}, [id]);
+
 
   const fetchData = async () => {
     try {
       setLoading(true);
       const productData: ShoppingCartProduct[] = await Ecommerce1();
-      const selectedProduct = productData.find((product) => product.id === wrappedParam.id);
+      const selectedProduct = productData.find((product) => product.id === id);
+
+      
 
       if (!selectedProduct) {
         console.log("Product not found");
         return;
       }
-
       setData(selectedProduct); // Setting the product data after fetching
     } catch (error) {
       console.error("Error fetching product data:", error);
@@ -45,6 +49,62 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
       setLoading(false);
     }
   };
+
+  const handleAddToCart = useCallback(() => {
+    if (data) {
+      const productToAdd = {
+        id: data.id,
+        sku: data.sku,
+        name: data.name,
+        price: data.price,
+        image: data.image ? urlFor(data.image).url() : "/placeholder-image.png",
+        quantity: 1,
+        currency: "USD",
+      };
+
+      addToCart(productToAdd);
+
+      // Show success toast
+      toast.success("Item added to cart!", {
+        position: "bottom-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
+  
+    }
+  }, [data, addToCart]);
+
+  const handleAddToCart1 = useCallback(() => {
+    if (data) {
+      const productToAdd = {
+        id: data.id,
+        sku: data.sku,
+        name: data.name,
+        price: data.price,
+        image: data.image ? urlFor(data.image).url() : "/placeholder-image.png",
+        quantity: 1,
+        currency: "USD",
+      };
+
+      addToCart(productToAdd);
+
+      // Show success toast
+      toast.success("Item added to cart!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
+  
+    }
+  }, [data, addToCart]);
 
   if (loading) {
     return (
@@ -57,6 +117,8 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
     );
   }
 
+  
+
   if (!data) {
     return (
       <div className="flex justify-center items-center h-[100vh]">
@@ -65,27 +127,10 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
     );
   }
 
-  const handleAddToCart = () => {
-
-    if (data) {
-      const productToAdd = {
-        id: data.id,
-        sku: data.sku,  // Use id as sku if no separate sku field is available
-        name: data.name,
-        price: data.price,
-        image: data.image ? urlFor(data.image).url() : '',
-        quantity: 1, // You can change quantity as needed
-        currency: "USD", // Add the currency field here (hardcoded as USD)
-      };
-
-      addToCart(productToAdd);  // Add the item to the cart
-      setProductAdded(true); // Show the product added message
-      setTimeout(() => setProductAdded(false), 2000); // Hide the message after 2 seconds
-    }
-  };
-
 
   return (
+<>
+<ToastContainer/>
     <section>
       <Header />
 
@@ -203,14 +248,23 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
 
                 {/* Icons */}
                 <div className='flex gap-5 items-center'>
-                  <div className='bg-[#FFFFFF] rounded-[45px] flex items-center justify-center  h-[50px] border-[1px]'>
+                  <div className='bg-[#FFFFFF] rounded-[45px] flex items-center justify-center sm:w-[50px] w-full  h-[50px] border-[1px]'>
                     <CiHeart size={30} />
                   </div>
 
-                  <div className='bg-[#FFFFFF] rounded-[45px] flex items-center justify-center  h-[50px] border-[1px]'>
+                  <div className='bg-[#FFFFFF] rounded-[45px] flex items-center justify-center sm:w-[50px] w-full  h-[50px] border-[1px]'>
                     <button
-
+                    className='hidden sm:block'
                       onClick={handleAddToCart}
+                    
+                    >
+                      <IoCartOutline size={30} />
+                    </button>
+
+                    <button
+                    className='sm:hidden block'
+                      onClick={handleAddToCart1}
+                    
                     >
                       <IoCartOutline size={30} />
                     </button>
@@ -227,15 +281,15 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
 
               </div>
               <br />
-              {/* Product Added Message */}
-              {productAdded && <p className="text-green-500 mt-2">
-                {data.name} is added to cart</p>}
+             
             </div>
           </div>
         </div>
 
       </div>
     </section>
+
+    </>
   );
 }
 

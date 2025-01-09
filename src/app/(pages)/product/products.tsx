@@ -58,11 +58,14 @@ function ProductsPage() {
       </div>
 
       {/* Blogs */}
-      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-10  lg:mx-10">
+     <div className='flex justify-center items-center'>
+     <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-10  lg:mx-10 ">
         {getData.map((prod) => (
           <Productcard key={prod._id} data={prod} /> // Pass each blog
         ))}
       </div>
+     </div>
+
     </div>
   </section>
 

@@ -1,7 +1,7 @@
 "use client";
 import Header from "@/app/components/header";
 import { useCart } from "../context/cartcontext";
-
+import Link from "next/link";
 const CartPage = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
 
@@ -117,18 +117,21 @@ const CartPage = () => {
                 <span className="text-lg text-gray-600">Total Price:</span>
                 <span className="text-2xl font-bold text-green-600">${total.toFixed(2)}</span>
               </div>
-              <button
+            <Link href={"/form"}>
+            <button 
                 className="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200 shadow-lg"
-                onClick={() => alert("Proceed to Checkout")}
               >
                 Checkout
               </button>
+            </Link>
             </div>
           </div>
         )}
       </div>
+     
     </section>
   );
 };
 
 export default CartPage;
+

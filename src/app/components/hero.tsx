@@ -31,24 +31,26 @@ function Hero() {
 
         <div className="grid lg:grid-cols-3 sm:grid-cols-1 gap-10 max-w-screen-lg mx-auto font-semibold px-5">
           {/* Card 1 */}
-          <div className="relative">
+          <div className="relative flex justify-center">
+            <div className="sm:w-[250px] w-[250px]">
             <Image src="/img1.png" width={510} height={500} alt="Men" />
-            <p className="absolute lg:bottom-14 bottom-5 left-5 bg-white text-center py-2 px-4">MEN</p>
+            <p className="absolute lg:bottom-32 bottom-5 lg:left-10 left-10 sm:left-52 bg-white text-center py-2 px-4">MEN</p>
+            </div>
           </div>
           {/* Card 2 */}
           <div className="relative flex flex-col justify-center items-center">
             <Image src="/img2.png" width={240} height={500} alt="Women" />
-            <p className="absolute bottom-5  left-10 bg-white text-center py-2 px-4">WOMEN</p>
+            <p className="absolute bottom-5 lg:left-10  left-10 sm:left-52 bg-white text-center py-2 px-4">WOMEN</p>
           </div>
           {/* Card 3 */}
           <div >
             <div className="relative mb-5 flex flex-col justify-center items-center">
               <Image src="/img3.png" width={240} height={242} alt="Accessories" />
-              <p className="absolute bottom-5 left-10 bg-white text-center py-2 px-4">ACCESSORIES</p>
+              <p className="absolute bottom-5 left-10 sm:left-52 lg:left-10 bg-white text-center py-2 px-4">ACCESSORIES</p>
             </div>
             <div className="relative flex flex-col justify-center items-center">
               <Image src="/img4.png" width={240} height={242} alt="Kids" />
-              <p className="absolute bottom-5 left-10 bg-white text-center py-2 px-4">KIDS</p>
+              <p className="absolute lg:left-10 bottom-5 left-10 sm:left-52 bg-white text-center py-2 px-4">KIDS</p>
             </div>
           </div>
 

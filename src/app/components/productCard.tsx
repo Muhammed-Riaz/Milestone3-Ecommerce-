@@ -14,7 +14,7 @@ function Productcard({ data }: dataprop) {
 
     <section className="font-sans">
 
-        <div className='max-w-[350px] relative group shadow hover:shadow-xl rounded-xl my-auto max-h-[550px] border px-2 py-2 '>
+        <div className='max-w-[350px] m-2 relative group shadow hover:shadow-xl rounded-xl my-auto max-h-[550px] border px-2 py-2 '>
           
 
           {/* img */}

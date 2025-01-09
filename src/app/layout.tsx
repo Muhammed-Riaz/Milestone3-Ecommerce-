@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "./components/footer";
 import { CartProvider } from "./(pages)/context/cartcontext";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -10,17 +11,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body>
-      <CartProvider>
-          {children}
-        </CartProvider>
-       <Footer/>
-        </body>
+        <ClerkProvider>
+          <CartProvider>
+            <div className="content-wrapper">{children}</div>
+            <Footer />
+          </CartProvider>
+        </ClerkProvider>
+      </body>
     </html>
   );
 }

@@ -1,5 +1,6 @@
 "use client"
 import Link from "next/link";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { useCart } from "../(pages)/context/cartcontext";
 import {
   Sheet,
@@ -84,7 +85,12 @@ function Header() {
           <div className="flex items-center gap-4">
             <div className="hidden lg:flex items-center gap-3 text-[#23A6F0] font-bold">
             <IoPersonOutline size={20} />
-              <p>Login / Register</p>
+            <SignedOut>
+              <SignInButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
             </div>
 
             <div className="flex items-center gap-3 relative h-[36px] w-[75px] lg:w-auto">
