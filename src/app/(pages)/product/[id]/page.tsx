@@ -15,40 +15,39 @@ import { useCart } from '../../context/cartcontext';
 import Header from '@/app/components/header';
 import 'react-toastify/dist/ReactToastify.css';
 
-function Page({ params }: { params: Promise<{ id: string }> }) {
 
+function Page({ params }: { params: Promise<{ id: string }> }) {
   const [data, setData] = useState<ShoppingCartProduct | null>(null);
   const [loading, setLoading] = useState(true);
   const { addToCart } = useCart();
+  const { id } = React.use(params);
 
-  const {id} = React.use(params);
-
-useEffect(() => {
-  if (id) {
-    fetchData();
-  }
-}, [id]);
-
-
-  const fetchData = async () => {
+  // Memoize fetchData with useCallback
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       const productData: ShoppingCartProduct[] = await Ecommerce1();
       const selectedProduct = productData.find((product) => product.id === id);
 
-      
-
       if (!selectedProduct) {
-        console.log("Product not found");
+        console.error("Product not found");
         return;
       }
-      setData(selectedProduct); // Setting the product data after fetching
+
+      setData(selectedProduct);
     } catch (error) {
       console.error("Error fetching product data:", error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
+
+  // useEffect with updated dependency array
+  useEffect(() => {
+    if (id) {
+      fetchData();
+    }
+  }, [id, fetchData]);
 
   const handleAddToCart = useCallback(() => {
     if (data) {
@@ -64,7 +63,6 @@ useEffect(() => {
 
       addToCart(productToAdd);
 
-      // Show success toast
       toast.success("Item added to cart!", {
         position: "bottom-left",
         autoClose: 3000,
@@ -73,10 +71,9 @@ useEffect(() => {
         pauseOnHover: true,
         draggable: true,
       });
-
-  
     }
   }, [data, addToCart]);
+
 
   const handleAddToCart1 = useCallback(() => {
     if (data) {
@@ -92,19 +89,17 @@ useEffect(() => {
 
       addToCart(productToAdd);
 
-      // Show success toast
       toast.success("Item added to cart!", {
-        position: "top-right",
+        position: "bottom-left",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
       });
-
-  
     }
   }, [data, addToCart]);
+
 
   if (loading) {
     return (
@@ -117,8 +112,6 @@ useEffect(() => {
     );
   }
 
-  
-
   if (!data) {
     return (
       <div className="flex justify-center items-center h-[100vh]">
@@ -126,7 +119,6 @@ useEffect(() => {
       </div>
     );
   }
-
 
   return (
 <>
