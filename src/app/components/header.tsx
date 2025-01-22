@@ -31,7 +31,7 @@ const Header: React.FC<HeaderProps> = ({ products = [] }) => {
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   const { wishlist } = useWishlist();
-  const totalwishlist = wishlist.reduce((acc,wish)=>acc+wish.quantity,0);
+  const totalwishlist = wishlist.reduce((acc, wish) => acc + wish.quantity, 0);
 
   const [showSearch, setShowSearch] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -139,7 +139,7 @@ const Header: React.FC<HeaderProps> = ({ products = [] }) => {
 
                 {/* Display Search Results */}
                 {showSearch && filteredProducts.length > 0 && (
-                  <div onClick={handle} className="absolute top-16 right-0 bg-white shadow-lg p-3 rounded-lg max-w-80 z-50 
+                  <div onClick={handle} className="absolute top-[70px] right-[-90px] bg-white shadow-lg p-3 rounded-lg w-80 z-50 
                   max-h-[500px] mt-10 overflow-y-auto">
                     <ul>
                       {filteredProducts.map((product) => (
@@ -158,14 +158,14 @@ const Header: React.FC<HeaderProps> = ({ products = [] }) => {
 
               <Link href="/wishlist">
                 <div className="relative cursor-pointer hidden lg:block ">
-                <CiHeart size={30} fill="#23A6F0" />
+                  <CiHeart size={30} fill="#23A6F0" />
                   <span className="absolute top-0 right-0 w-[18px] h-[18px] rounded-full bg-[#23A6F0] flex justify-center items-center text-[12px] text-white">
                     {totalwishlist}
                   </span>
                 </div>
               </Link>
 
-            
+
 
 
               {/* Cart Icon with Badge */}
@@ -205,30 +205,30 @@ const Header: React.FC<HeaderProps> = ({ products = [] }) => {
                       <li className="list-none hover:text-[#23A6F0]">Contact</li>
                     </Link>
                     <Link href="/wishlist">
-                <div className="relative cursor-pointer lg:hidden sm:block mt-5 flex justify-center">
-                <CiHeart size={35} fill="#23A6F0" />
-                  <span className="absolute top-0  w-[18px] h-[18px] rounded-full bg-[#23A6F0] flex justify-center items-center text-[12px] text-white">
-                    {totalwishlist}
-                  </span>
-                </div>
-              </Link>
-              <Link href="/cart">
-                <div className="relative cursor-pointer lg:hidden sm:block flex justify-center ">
-                  <IoCartOutline size={35} color="#23A6F0" />
-                  <span className="absolute top-0  w-[18px] h-[18px] rounded-full bg-[#23A6F0] flex justify-center items-center text-[12px] text-white">
-                    {totalItems}
-                  </span>
-                </div>
-              </Link>
-              <div className="hidden lg:flex items-center gap-3 text-[#23A6F0] font-bold">
-              <IoPersonOutline size={20} />
-              <SignedOut>
-                <SignInButton />
-              </SignedOut>
-              <SignedIn>
-                <UserButton />
-              </SignedIn>
-            </div>
+                      <div className="relative cursor-pointer lg:hidden sm:block mt-5 flex justify-center">
+                        <CiHeart size={35} fill="#23A6F0" />
+                        <span className="absolute top-0  w-[18px] h-[18px] rounded-full bg-[#23A6F0] flex justify-center items-center text-[12px] text-white">
+                          {totalwishlist}
+                        </span>
+                      </div>
+                    </Link>
+                    <Link href="/cart">
+                      <div className="relative cursor-pointer lg:hidden sm:block flex justify-center ">
+                        <IoCartOutline size={35} color="#23A6F0" />
+                        <span className="absolute top-0  w-[18px] h-[18px] rounded-full bg-[#23A6F0] flex justify-center items-center text-[12px] text-white">
+                          {totalItems}
+                        </span>
+                      </div>
+                    </Link>
+                    <div className="hidden lg:flex items-center gap-3 text-[#23A6F0] font-bold">
+                      <IoPersonOutline size={20} />
+                      <SignedOut>
+                        <SignInButton />
+                      </SignedOut>
+                      <SignedIn>
+                        <UserButton />
+                      </SignedIn>
+                    </div>
                   </nav>
                 </SheetHeader>
               </SheetContent>

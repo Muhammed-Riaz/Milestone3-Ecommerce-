@@ -1,3 +1,4 @@
+import { ProductProps } from "@/app/components/productfetched";
 import { NextRequest, NextResponse } from "next/server";
 
 import Stripe from "stripe";
@@ -8,15 +9,11 @@ const stripe = new Stripe(
   { apiVersion: "2024-12-18.acacia" }
 );
 
-const calculateOrderAmount = (items:unknown) => {
-  if (!Array.isArray(items) || items.length === 0) {
-    throw new Error("Invalid items array");
+const calculateOrderAmount = (items:ProductProps) => {
+ return items&&1400;
   }
 
   // Calculate total amount dynamically
-  return items.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0);
-};
-
 
 export async function POST(req: NextRequest) {
 
