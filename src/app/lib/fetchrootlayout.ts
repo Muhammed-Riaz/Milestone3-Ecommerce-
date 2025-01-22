@@ -3,7 +3,7 @@ const fetchProducts = async () => {
     const API_URL =
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000"
-        : process.env.NEXT_PUBLIC_API_URL;
+        : process.env.API_URL;
 
     if (!API_URL) {
       throw new Error("❌ NEXT_PUBLIC_API_URL is not defined.");
