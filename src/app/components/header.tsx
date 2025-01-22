@@ -220,8 +220,8 @@ const Header: React.FC<HeaderProps> = ({ products = [] }) => {
                         </span>
                       </div>
                     </Link>
-                    <div className="hidden lg:flex items-center gap-3 text-[#23A6F0] font-bold">
-                      <IoPersonOutline size={20} />
+                    <div className="flex justify-start flex-col items-center gap-3 text-[#23A6F0] font-bold">
+                      <IoPersonOutline size={35} />
                       <SignedOut>
                         <SignInButton />
                       </SignedOut>
@@ -229,6 +229,7 @@ const Header: React.FC<HeaderProps> = ({ products = [] }) => {
                         <UserButton />
                       </SignedIn>
                     </div>
+
                   </nav>
                 </SheetHeader>
               </SheetContent>
