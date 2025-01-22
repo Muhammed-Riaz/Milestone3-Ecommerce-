@@ -16,6 +16,7 @@ export type ShoppingCartProduct = {
   currency: string;
   image: string;
   description: string;
+  qunatity:number;
 };
 
 
@@ -44,6 +45,7 @@ export async function Ecommerce1(): Promise<ShoppingCartProduct[]> {
         currency: "USD",
         image: prod?.image?.asset?._ref || "/default-image.jpg",
         description: prod?.title || "No description provided.",
+        qunatity:1
       };
       console.log(transformedProduct);
       

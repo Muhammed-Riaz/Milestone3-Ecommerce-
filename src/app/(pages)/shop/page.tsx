@@ -1,5 +1,4 @@
 import Footer from '@/app/components/footer';
-import Header from '@/app/components/header';
 import Products from '@/app/components/products';
 import Image from 'next/image';
 import React from 'react';
@@ -10,12 +9,6 @@ function Shop() {
 
 
     <section>
-
-{/* header */}
-
-<Header/>
-
-
       <div className="mt-20 font-sans">
 
         {/* Header Section */}

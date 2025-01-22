@@ -8,19 +8,22 @@ const stripe = new Stripe(
   { apiVersion: "2024-12-18.acacia" }
 );
 
-const calculateOrderAmount = () => {
-  // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  return 1400;
+const calculateOrderAmount = (items:unknown) => {
+  if (!Array.isArray(items) || items.length === 0) {
+    throw new Error("Invalid items array");
+  }
+
+  // Calculate total amount dynamically
+  return items.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0);
 };
+
 
 export async function POST(req: NextRequest) {
 
   const {item} = await req.json()
 
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(),
+    amount: calculateOrderAmount(item),
     currency: "eur",
     // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
     automatic_payment_methods: {
@@ -28,5 +31,5 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  return NextResponse.json({ clientSecret:  paymentIntent.client_secret},item)
+  return NextResponse.json({ clientSecret:  paymentIntent.client_secret})
 }

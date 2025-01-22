@@ -1,5 +1,4 @@
 "use client";
-import Header from "@/app/components/header";
 import { useCart } from "../context/cartcontext";
 import Link from "next/link";
 
@@ -14,8 +13,6 @@ const CartPage = () => {
   return (
 
     <section>
-
-      <Header />
 
       <div className="p-6 bg-gray-50 min-h-screen">
         <h1 className="text-3xl font-extrabold mb-6 text-gray-800">Your Cart</h1>
