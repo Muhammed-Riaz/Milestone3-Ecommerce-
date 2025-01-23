@@ -39,11 +39,17 @@ const CategoryPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {filteredProducts.map((product) => (
           <div key={product._id} className="bg-white  shadow-md rounded-lg overflow-hidden transition-transform duration-300 transform hover:scale-105 hover:shadow-xl text-[#23A6F0]">
-            
-            <Image src={product.imageUrl} alt={product.title} className="w-full h-40 object-cover rounded" />
+
+            <Image
+              src={product.imageUrl}
+              alt={product.title}
+              width={300}
+              height={200}
+              className="w-full h-40 object-cover rounded"
+            />
             <Link href={`/fetchproduct/${product._id}`}>
-            <h3 className="text-lg font-semibold mt-2">{product.title}</h3>
-            <p className="text-gray-600">${product.price}</p>
+              <h3 className="text-lg font-semibold mt-2">{product.title}</h3>
+              <p className="text-gray-600">${product.price}</p>
             </Link>
           </div>
         ))}

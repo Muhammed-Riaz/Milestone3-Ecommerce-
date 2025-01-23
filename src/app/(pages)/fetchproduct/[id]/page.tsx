@@ -208,7 +208,7 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
 
                   <div className='max-w-[150px]  h-auto rounded-md overflow-hidden border border-gray-200 cursor-pointer'>
                     <Image
-                      src={data.isNew ? urlFor(data.imageUrl).url() : "/placeholder-image.png"}
+                      src={data.imageUrl ? urlFor(data.imageUrl).url() : "/placeholder-image.png"}
                       height={150}
                       width={150}
                       alt={data.title || "Product image"}
@@ -220,11 +220,11 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
 
                   <div className='max-w-[150px] h-auto rounded-md overflow-hidden border border-gray-200 cursor-pointer'>
                     <Image
-                      src={data.isNew ? urlFor(data.imageUrl).url() : "/placeholder-image.png"}
+                      src={data.imageUrl ? urlFor(data.imageUrl).url() : "/placeholder-image.png"}
                       height={150}
                       width={150}
                       alt={data.title || "Product image"}
-                      className='overflow-hidden rounded-[5px] bg-cover object-cover'
+                      className='overflow-hidden object-fill rounded-[5px] bg-cover '
                       onError={(e) => e.currentTarget.src = "/placeholder-image.png"} // Graceful fallback
                     />
 

@@ -27,6 +27,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ products = [] }) => {
+
+  
   const { cart } = useCart();
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -139,23 +141,24 @@ const Header: React.FC<HeaderProps> = ({ products = [] }) => {
 
                 {/* Display Search Results */}
                 {showSearch && filteredProducts.length > 0 && (
-                  <div onClick={handle} className="absolute top-[70px] right-[-90px] bg-white shadow-lg p-3 rounded-lg w-80 z-50 
+                  <div onClick={handle} className="absolute top-[70px] right-[-90px] bg-white shadow-lg p-3 rounded-lg w-72 mx-auto z-50 
                   max-h-[500px] mt-10 overflow-y-auto">
-                    <ul>
+                    
                       {filteredProducts.map((product) => (
-                        <Link key={product._id} href={`/fetchproduct/${product._id}`}>
+                        <ul  key={product._id} >
+                        <Link  href={`/fetchproduct/${product._id}`}>
                           <li className="p-2 border-b cursor-pointer hover:bg-gray-100">
                             {product.title}
                           </li>
+                         
                         </Link>
+                        </ul>
                       ))}
-                    </ul>
+                   
                   </div>
                 )}
 
               </div>
-
-
               <Link href="/wishlist">
                 <div className="relative cursor-pointer hidden lg:block ">
                   <CiHeart size={30} fill="#23A6F0" />

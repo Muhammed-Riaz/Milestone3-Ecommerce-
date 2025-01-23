@@ -1,4 +1,6 @@
-const fetchProducts = async () => {
+import { NextResponse } from "next/server";
+
+export async function GET() {
   try {
     const API_URL =
       process.env.NODE_ENV === "development"
@@ -20,11 +22,10 @@ const fetchProducts = async () => {
       throw new Error(`❌ API Request Failed: ${res.status} - ${errorText}`);
     }
 
-    return await res.json();
+    const products = await res.json();
+    return NextResponse.json(products);
   } catch (error) {
     console.error("❌ Error fetching products:", error);
-    return [];
+    return NextResponse.json({ error: "Failed to fetch products" }, { status: 500 });
   }
-};
-
-export default fetchProducts;
+}
