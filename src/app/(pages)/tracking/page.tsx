@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import axios from "axios";
 import { useSearchParams, useRouter } from "next/navigation";
 import { TrackingData } from "@/type";
+import Link from "next/link";
 
 function TrackShipment() {
   const [labelId, setLabelId] = useState(""); // State for labelId input
@@ -51,6 +52,16 @@ function TrackShipment() {
 
   return (
       <div className="min-h-screen bg-gray-100 py-8 text-black">
+
+         <Link href={"/"}>
+         <button
+                disabled={loading}
+                className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors disabled:bg-blue-300 ml-10"
+              >
+                Back Home 
+              </button>
+         </Link>
+
         <div className="max-w-4xl mx-auto px-4">
           <h1 className="text-3xl font-bold text-center mb-8">Track Your Shipment</h1>
 

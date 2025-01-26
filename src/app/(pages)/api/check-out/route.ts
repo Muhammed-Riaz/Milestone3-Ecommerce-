@@ -10,7 +10,7 @@ const stripe = new Stripe(
 );
 
 const calculateOrderAmount = (items:ProductProps) => {
- return items&&1400;
+ return 1400;
   }
 
   // Calculate total amount dynamically

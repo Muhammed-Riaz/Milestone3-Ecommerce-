@@ -11,8 +11,8 @@ function Shipement() {
 
 
   const [shipeToAddress, setshipeToAddress] = useState<Address>({
-    name: "John Doe",
-    phone: "+1 555-678-1234",
+    name: "",
+    phone: "",
     addressLine1: "1600 Pennsylvania Avenue NW",
     addressLine2: "", // Optional
     cityLocality: "Washington",
@@ -79,26 +79,22 @@ function Shipement() {
 
       const response = await axios.post(`/api/shipengine/label?nocache=${Date.now()}`, { rateId });
 
-      console.log("✅ API Response:", response.data);
+      const labelData = response.data;
+  
+      
 
-      const labeldata = response.data;
-
-      if (!labeldata.labelId) {
+      if (!labelData.labelId) {
         console.error("❌ Missing labelId in response!");
       }
 
-      setLabelPdf(labeldata.labelDownload.href);
+      setLabelPdf(labelData.labelDownload.href);
       setTrackingObj({
-        trackingNumber: labeldata.trackingNumber,
-        labelId: labeldata.carrierId,
-        carrierCode: labeldata.carrierCode,
+        trackingNumber: labelData.trackingNumber,
+        labelId: labelData.labelId,
+        carrierCode: labelData.carrierCode,
       });
-
-      console.log("📦 Updated trackingObj:", {
-        trackingNumber: labeldata.trackingNumber,
-        labelId: labeldata.curirid,
-        carrierCode: labeldata.carrierCode,
-      });
+      
+      
 
     } catch (error) {
       console.error("❌ Error creating label:", error as string);
@@ -291,24 +287,23 @@ function Shipement() {
 
 
       {labelPdf && (
-        <Link target="_blank" href={labelPdf}> <button className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">Download Label</button></Link>
+        <Link target="_blank" href={labelPdf}> <button className="px-4 py-2 my-8 bg-green-500 text-white rounded-md hover:bg-green-600">Download Label</button></Link>
       )}
 
 
       {trackingObj && (
-        <div className="mt-8">
+        <div className="my-8">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">
             Tracking thinks (We are using ShipEngine test api key so order will not trace)
           </h2>
           <p>tracking number: {trackingObj.trackingNumber}</p>
           <p> labelId: {trackingObj.labelId}</p>
           <p> carrierCode: {trackingObj.carrierCode}</p>
-          <Link href={`/tracking/${trackingObj.labelId}`}>
-            <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+          <Link href={`/tracking/?labelId=${trackingObj.labelId}`}>
+            <button className="px-4 py-2 mt-5 bg-blue-500 text-white rounded-md hover:bg-blue-600">
               Track Order
             </button>
           </Link>
-
 
         </div>
       )}
