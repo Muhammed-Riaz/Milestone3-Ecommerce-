@@ -1,5 +1,5 @@
-import { ProductProps } from "@/app/components/productfetched";
-import { NextRequest, NextResponse } from "next/server";
+
+import { NextResponse } from "next/server";
 
 import Stripe from "stripe";
 
@@ -9,18 +9,17 @@ const stripe = new Stripe(
   { apiVersion: "2024-12-18.acacia" }
 );
 
-const calculateOrderAmount = (items:ProductProps) => {
+const calculateOrderAmount = () => {
  return 1400;
   }
 
   // Calculate total amount dynamically
 
-export async function POST(req: NextRequest) {
+export async function POST() {
 
-  const {item} = await req.json()
 
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(item),
+    amount: calculateOrderAmount(),
     currency: "eur",
     // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
     automatic_payment_methods: {
