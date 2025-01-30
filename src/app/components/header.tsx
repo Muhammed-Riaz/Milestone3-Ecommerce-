@@ -2,16 +2,17 @@
 import Link from "next/link";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { useCart } from "../(pages)/context/cartcontext";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTrigger,
-  SheetTitle,
+import { 
+  Sheet, 
+  SheetTrigger, 
+  SheetContent, 
+  SheetHeader, 
+  SheetTitle 
 } from "@/components/ui/sheet";
+
 import { IoCallOutline, IoCartOutline, IoPersonOutline } from "react-icons/io5";
 
-import { CiHeart, CiSearch, CiYoutube, CiFacebook, CiTwitter } from "react-icons/ci";
+import { CiHeart, CiSearch,  CiFacebook, CiTwitter, CiLinkedin } from "react-icons/ci";
 import { FaInstagram, FaAngleDown } from "react-icons/fa";
 import { TfiEmail } from "react-icons/tfi";
 import { BiMenuAltRight } from "react-icons/bi";
@@ -49,11 +50,11 @@ const Header: React.FC<HeaderProps> = ({ products = [] }) => {
         <div className="flex  items-center gap-8">
           <div className="flex items-center gap-2 font-semibold">
             <IoCallOutline size={20} />
-            <p>(225) 555-0118</p>
+            <p>(+92) 3402800715</p>
           </div>
           <div className="flex items-center gap-2 font-semibold">
             <TfiEmail size={20} />
-            <p>michelle.rivera@example.com</p>
+            <p>riazahmedzaur110@gmail.com</p>
           </div>
         </div>
 
@@ -65,10 +66,10 @@ const Header: React.FC<HeaderProps> = ({ products = [] }) => {
         {/* Social Media Links */}
         <div className="flex items-center gap-4 font-bold">
           <p>Follow Us:</p>
-          <FaInstagram size={20} />
-          <CiYoutube size={20} />
-          <CiFacebook size={20} />
-          <CiTwitter size={20} />
+          <Link href={""}><FaInstagram size={20} /></Link>
+          <Link href={"https://www.linkedin.com/in/riaz-ahmed-zaur-a668832b6?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app "}><CiLinkedin size={20} /></Link>
+          <Link href={"https://www.facebook.com/share/18AjYr4EpM/?mibextid=qi2Omg"}><CiFacebook size={20} /></Link>
+          <Link href={""}><CiTwitter size={20} /></Link>
         </div>
       </div>
 
@@ -187,6 +188,7 @@ const Header: React.FC<HeaderProps> = ({ products = [] }) => {
               <SheetTrigger className="sm:hidden">
                 <BiMenuAltRight size={30} />
               </SheetTrigger>
+              
               <SheetContent className="bg-white">
                 <SheetHeader>
                   <SheetTitle className="text-lg font-semibold text-[#252B42] mb-4 mt-5">
@@ -236,6 +238,7 @@ const Header: React.FC<HeaderProps> = ({ products = [] }) => {
                   </nav>
                 </SheetHeader>
               </SheetContent>
+
             </Sheet>
           </div>
         </div>

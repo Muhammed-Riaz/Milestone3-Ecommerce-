@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import Shipement from "../genrate-tracking/page";
+import CompletePage from "@/app/components/success";
 
 
 // Initialize Stripe
@@ -28,11 +28,9 @@ export default function FormPage() {
 
     <section>
     <div className="p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-extrabold text-center mb-6">Tracking</h1>
-
       {showForm && clientSecret ? (
         <Elements stripe={stripePromise} options={{ clientSecret }}>
-          < Shipement  />
+          < CompletePage />
         </Elements>
       ) : (
         <div className="flex justify-center items-center h-[60vh]">

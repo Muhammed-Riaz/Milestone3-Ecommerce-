@@ -12,20 +12,19 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import React from 'react';
 import Ecommerce1, { ShoppingCartProduct } from "@/app/components/query1";
 import { useCart } from '../../context/cartcontext';
-import 'react-toastify/dist/ReactToastify.css';
 import { useWishlist } from '@/app/components/wishlist';
-
-
-
+import ReviewForm from '@/app/components/review';
+import { client } from '@/sanity/lib/client';
 
 function Page({ params }: { params: Promise<{ id: string }> }) {
   const [data, setData] = useState<ShoppingCartProduct | null>(null);
   const [loading, setLoading] = useState(true);
-  const { addToCart,cart } = useCart();
+  const [reviews, setReviews] = useState([]);
+  // const [averageRating, setAverageRating] = useState(0);
+  const { addToCart, cart } = useCart();
   const { id } = React.use(params);
   const { addToWishlist } = useWishlist();
 
-  // Memoize fetchData with useCallback
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
@@ -38,6 +37,12 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
       }
 
       setData(selectedProduct);
+
+      // Fetch reviews related to the product
+      const reviewQuery = `*[_type == "review" && product._ref == "${selectedProduct.id}"]`;
+      const reviewData = await client.fetch(reviewQuery);
+      setReviews(reviewData);
+
     } catch (error) {
       console.error("Error fetching product data:", error);
     } finally {
@@ -45,13 +50,11 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
     }
   }, [id]);
 
-  // useEffect with updated dependency array
   useEffect(() => {
     if (id) {
       fetchData();
     }
   }, [id, fetchData]);
-
 
   const handleAddToCart = useCallback(() => {
     if (!data) {
@@ -69,35 +72,33 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
         currency: "USD",
       };
 
-      const already = cart.some((prev)=>prev.id == productToAdd.id);
-     if(!already){
-      addToCart(productToAdd);
-      toast.success("Item added to cart!", {
-        position: "bottom-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-     }else{
-      toast.info("item already added!",{
-        position:"bottom-right",
-        autoClose:3000
-      })
-     }
+      const already = cart.some((prev) => prev.id === productToAdd.id);
+      if (!already) {
+        addToCart(productToAdd);
+        toast.success("Item added to cart!", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      } else {
+        toast.info("Item already added!", {
+          position: "bottom-right",
+          autoClose: 3000
+        });
+      }
     } catch (error) {
       console.error('Error adding to cart:', error);
     }
-  }, [data,cart, addToCart]);
-
+  }, [data, cart, addToCart]);
 
   const handleAddToWishlist = useCallback(() => {
     if (!data) {
       console.error('No product data available');
       return;
     }
-
     try {
       const productToAdd = {
         id: data.id,
@@ -110,13 +111,11 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
       };
 
       addToWishlist(productToAdd);
-    
+
     } catch (error) {
-      console.error('Error adding to cart:', error);
+      console.error('Error adding to wishlist:', error);
     }
   }, [data, addToWishlist]);
-
-
 
   if (loading) {
     return (
@@ -136,7 +135,6 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
       </div>
     );
   }
-
   return (
     <>
       <ToastContainer />
@@ -146,9 +144,9 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
 
           <div className='max-w-[1440px] mx-auto'>
             <div className='max-w-screen-xl px-5 mx-auto flex items-center gap-2 pt-[24px] pb-[24px]'>
-              <span className='text-[#252B42] font-[700] text-[14px]'>Home</span>
+              <span className='text-[#252B42] font-[700] text-[18px]'>Home</span>
               <MdOutlineKeyboardArrowRight fill='#BDBDBD' size={30} />
-              <span className='text-[#b1aeae] font-bold'>shop</span>
+              <span className= 'text-[#b1aeae] text-[18px] font-bold'>shop</span>
             </div>
           </div>
 
@@ -159,10 +157,10 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
               {/* img */}
               <div className='sm:w-[506px] w-full relative rounded-[10px] mb-4'>
 
-                <div className='bg-[#FFFFFF] w-full h-[250px]  rounded-[10px] sm:h-[450px]  relative'>
+                <div className='bg-[#FFFFFF] w-full h-[250px]  rounded-[10px] sm:h-[600px]  relative'>
                   <Image
                     src={data.image ? urlFor(data.image).url() : "/placeholder-image.png"}
-                    height={500}
+                    height={600}
                     width={300}
                     alt={data.name || "Product image"}
                     className='overflow-hidden rounded-[5px] h-full w-full  absolute inset-0 object-cover '
@@ -198,18 +196,17 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
 
                   </div>
 
-
                 </div>
 
               </div>
 
               {/* text  */}
               <div className=' py-5 text-center sm:text-left'>
-                <h3 className='text-[#252B42] font-[400] text-[20px]'>{data.name}</h3>
+                <h3 className='text-[#252B42] font-[600] text-[30px]'>{data.name}</h3>
 
                 {/* review */}
-                <div className='w-[223px] h-[24px] flex items-center sm:gap-5 gap-2 my-[23px] ml-[10px] '>
-                  <div className='w-[150px] h-[23px] '>
+                <div className='w-[223px] h-[25px] flex items-center sm:gap-5 gap-2 my-[23px] ml-[10px] '>
+                  <div className='w-[200px] h-[30px] '>
                     <Image
                       src={"/stars.png"}
                       height={25}
@@ -219,83 +216,81 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
                     </Image>
                   </div>
 
-                  <div className='w-[100px] mb-3'>
-                    <p className='text-[#737373]  font-bold text-[14px]'>10 Reviews</p>
+                  <div className='w-[200px] mb-3'>
+                    <p className='text-[#737373] font-bold text-[18px]'>{reviews} Reviews</p>
                   </div>
 
                 </div>
 
                 {/* price */}
                 <div >
-                  <p className='text-[24px] font-[700] text-[#252B42]'> <span className='line-through text-[#737373]'>50$</span> {data.price}$</p>
+                  <p className='text-[30px] font-[700] text-[#252B42]'> <span className='line-through text-[#737373]'>50$</span> {data.price}$</p>
                 </div>
 
                 {/* stock */}
-                <div>
-                  <span className='text-[#737373] font-[700] text-[14px] '>Availability :</span> <span className='text-[#23A6F0] font-[700] text-[14px]'>in Stock</span>
+                <div className='mt-5'>
+                  <span className='text-[#737373]  font-[700] text-[18px] '>Availability :</span> <span className='text-[#23A6F0] font-[700] text-[17px]'>in Stock</span>
                 </div>
                 {/* title */}
                 <div className='max-w-[464px] my-5'>
-                  <p className='text-[#858585] font-[400]  text-[18px] '>{data.description}</p>
+                  <p className='text-[#858585] font-[400]  text-[28px] '>{data.description}</p>
                 </div>
 
                 {/* line  */}
                 <hr className='border-b-[1px] w-full' />
 
                 {/* rounded color light */}
-                <div className='sm:flex  hidden  items-center my-10 gap-2 mt-4'>
-                  <div className='w-[16px] h-[16px] bg-[#23A6F0] rounded-full'></div>
-                  <div className='w-[16px] h-[16px] bg-[#23856D] rounded-full'></div>
-                  <div className='w-[16px] h-[16px] bg-[#E77C40] rounded-full'></div>
-                  <div className='w-[16px] h-[16px] bg-[#252B42] rounded-full'></div>
+                <div className='sm:flex   hidden  items-center mb-10  gap-2 mt-10'>
+                  <div className='w-[30px] h-[30px] bg-[#23A6F0] rounded-full'></div>
+                  <div className='w-[30px] h-[30px] bg-[#23856D] rounded-full'></div>
+                  <div className='w-[30px] h-[30px] bg-[#E77C40] rounded-full'></div>
+                  <div className='w-[30px] h-[30px] bg-[#252B42] rounded-full'></div>
                 </div>
 
                 <div className='max-w-[400px] my-8 h-[44px] flex gap-5 items-center'>
 
-                  <button className='bg-[#23A6F0] w-[148px] h-[44px] rounded-[5px] sm:py-[10px] sm:px-[20px]  text-[#FFFFFF] text-[14px] font-[700]'>Select option</button>
+                  <button className='bg-[#23A6F0] w-[148px] h-[44px] rounded-[5px] sm:py-[5px] sm:px-[10px]  text-[#FFFFFF] text-[18px] font-[700]'>Select option</button>
 
                   {/* Icons */}
                   <div className='flex gap-5 items-center'>
                     <div className='bg-[#FFFFFF] rounded-[45px] flex items-center justify-center sm:w-[50px] w-full  h-[50px] border-[1px]'>
 
-                    
+
                       <button onClick={handleAddToWishlist}>
-                        <CiHeart size={30} />
+                        <CiHeart size={35} />
                       </button>
 
                     </div>
 
                     <div className='bg-[#FFFFFF] rounded-[45px] flex items-center justify-center sm:w-[50px] w-full  h-[50px] border-[1px]'>
                       <button onClick={handleAddToCart}>
-                        <IoCartOutline size={30} />
+                        <IoCartOutline size={35} />
                       </button>
 
-                      <button
-                        className='sm:hidden block'
-                        onClick={handleAddToCart}
-
-                      >
-                        <IoCartOutline size={30} />
-                      </button>
+                    
                     </div>
 
                     <div className='bg-[#FFFFFF] rounded-[45px] flex items-center justify-center sm:w-[50px] w-full h-[50px] border-[1px]'>
-                      <MdRemoveRedEye size={30} />
+                      <MdRemoveRedEye size={35} />
                     </div>
-
-
 
                   </div>
 
 
                 </div>
+
                 <br />
 
+                {/* Add review here */}
+                <ReviewForm />
               </div>
+              
             </div>
           </div>
 
         </div>
+
+
       </section>
 
     </>
@@ -303,7 +298,3 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
 }
 
 export default Page;
-
-
-
-

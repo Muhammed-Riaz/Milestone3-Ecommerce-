@@ -22,15 +22,15 @@ const Blog = () => {
                   Additional Information
                 </Link>
               </div>
-              <div className="p-[24px]">
+              <div className="p-[24px] ">
                 <Link href="/" className="font-[Montserrat] font-[600] text-[14px] text-[#737373]">
                   Reviews <span className="text-green-700 ml-2">(0) </span>
                 </Link>
               </div>
             </div>
-            <div className="border-t border-[#ECECEC] mx-auto max-w-4xl"></div>
+            <div className="border-t border-[#ECECEC] mx-auto max-w-4xl mt-20 lg:mt-5"></div>
 
-            <div className="flex flex-wrap items-center justify-center gap-10 mt-10">
+            <div className="flex flex-wrap items-center justify-center gap-10 mt-20 lg:mt-10 ">
               <div className="w-[332px] h-[392px]">
                 <Image
                   className="w-full h-full object-cover"

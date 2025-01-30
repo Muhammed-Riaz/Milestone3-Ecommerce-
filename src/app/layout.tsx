@@ -16,11 +16,13 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ClerkProvider>
+        <ClerkProvider
+          publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY} // ✅ Correct key
+        >
           <CartProvider>
-          <WishlistProvider>
-          <ClientHeader products={products} /> {/* ✅ Client Header use karein */} 
-            <main>{children}</main>
+            <WishlistProvider>
+              <ClientHeader products={products} /> {/* ✅ Client Header use karein */} 
+              <main>{children}</main>
             </WishlistProvider>
             <Footer />
           </CartProvider>

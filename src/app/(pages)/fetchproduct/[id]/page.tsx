@@ -14,6 +14,7 @@ import { useCart } from '../../context/cartcontext';
 import 'react-toastify/dist/ReactToastify.css';
 import { ProductProps } from '@/app/components/productfetched';
 import { useWishlist } from '@/app/components/wishlist';
+import ReviewForm from '@/app/components/review';
 
 
 function Page({ params }: { params: Promise<{ id: string }> }) {
@@ -365,6 +366,9 @@ function Page({ params }: { params: Promise<{ id: string }> }) {
 
                 </div>
                 <br />
+
+                 {/* Add review here */}
+                <ReviewForm />
 
               </div>
             </div>
