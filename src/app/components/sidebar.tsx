@@ -7,7 +7,7 @@ import {
   SheetHeader,
   SheetTitle
 } from "@/components/ui/sheet";
-import { IoCartOutline, IoPersonOutline } from "react-icons/io5";
+import {  IoPersonOutline } from "react-icons/io5";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 export default function Sidebar() {
