@@ -3,6 +3,7 @@ import { StarIcon } from 'lucide-react';
 import { client } from '@/sanity/lib/client';
 
 interface Review {
+  _id?: string;
   _type: 'review';
   name: string;
   review: string;
@@ -49,18 +50,20 @@ export default function ReviewForm() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
 
-  // Load reviews and user from localStorage on component mount
+  // Fetch reviews from Sanity on mount
   useEffect(() => {
-    const storedReviews = localStorage.getItem('reviews');
-    const storedUser = localStorage.getItem('currentUser');
+    const fetchReviews = async () => {
+      try {
+        const fetchedReviews: Review[] = await client.fetch(
+          `*[_type == "review"] | order(_createdAt desc)`
+        );
+        setReviews(fetchedReviews);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      }
+    };
 
-    if (storedReviews) {
-      setReviews(JSON.parse(storedReviews));
-    }
-
-    if (storedUser) {
-      setCurrentUser(storedUser);
-    }
+    fetchReviews();
   }, []);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -78,11 +81,10 @@ export default function ReviewForm() {
     };
 
     try {
-      await client.create(doc);
+      const newReview = await client.create(doc);
 
-      const updatedReviews = [...reviews, doc];
-      setReviews(updatedReviews);
-      localStorage.setItem('reviews', JSON.stringify(updatedReviews));
+      // Update state with new review from Sanity
+      setReviews((prevReviews) => [newReview, ...prevReviews]);
 
       // Store the user's name in localStorage so they can delete their own reviews
       localStorage.setItem('currentUser', name);
@@ -98,10 +100,13 @@ export default function ReviewForm() {
     }
   };
 
-  const handleDelete = (index: number) => {
-    const updatedReviews = reviews.filter((_, i) => i !== index);
-    setReviews(updatedReviews);
-    localStorage.setItem('reviews', JSON.stringify(updatedReviews));
+  const handleDelete = async (reviewId: string) => {
+    try {
+      await client.delete(reviewId);
+      setReviews((prevReviews) => prevReviews.filter((rev) => rev._id !== reviewId));
+    } catch (error) {
+      console.error('Error deleting review:', error);
+    }
   };
 
   return (
@@ -153,8 +158,8 @@ export default function ReviewForm() {
           <h3 className="text-2xl font-semibold text-gray-800">Reviews</h3>
           {reviews.length > 0 ? (
             <ul className="mt-6 space-y-4">
-              {reviews.map((rev, index) => (
-                <li key={index} className="p-4 border border-gray-300 rounded-lg shadow-lg">
+              {reviews.map((rev) => (
+                <li key={rev._id} className="p-4 border border-gray-300 rounded-lg shadow-lg">
                   <div className="flex items-center gap-5">
                     <p className="font-semibold text-lg">{rev.name}</p>
                     <div className="flex">
@@ -170,9 +175,9 @@ export default function ReviewForm() {
                   <p className="text-lg text-gray-700">{rev.review}</p>
 
                   {/* Show delete button only if the current user matches the review's name */}
-                  {currentUser === rev.name && (
+                  {currentUser === rev.name && rev._id && (
                     <button
-                      onClick={() => handleDelete(index)}
+                      onClick={() => handleDelete(rev._id!)}
                       className="mt-2 text-red-500 hover:text-red-700 transition"
                     >
                       Delete Review
